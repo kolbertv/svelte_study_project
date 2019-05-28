@@ -1,5 +1,6 @@
 <script>
-  import Button from '../UI/Button.svelte'
+  import { createEventDispather } from "svelte";
+  import Button from "../UI/Button.svelte";
 
   export let title;
   export let subtitle;
@@ -7,6 +8,8 @@
   export let description;
   export let address;
   export let email;
+
+  const dispatch = createEventDispather();
 </script>
 
 <style>
@@ -62,10 +65,9 @@
     text-align: right;
   }
 
-.content {
-  height: 4rem;
-}
-
+  .content {
+    height: 4rem;
+  }
 </style>
 
 <article>
@@ -81,8 +83,12 @@
     <p>{description}</p>
   </div>
   <footer>
-    <Button href='mailto:{email}'  caption="contact" />
+    <Button href="mailto:{email}" caption="contact" />
+    <Button
+      mode="outline"
+      type="button"
+      caption="Favorites"
+      on:click={() => dispatch('toggle-favorite')} />
     <Button type="button" caption="Show Details" />
-    <Button  mode='outline'  type="button" caption="Favorites" />
   </footer>
 </article>
