@@ -51,6 +51,16 @@
 
     meetups = [newMeetup, ...meetups];
   }
+
+  function toggleFavorite(event) {
+    const id = event.detail;
+    const updateMeetup = { ...meetups.find(m => m.id === id) };
+    updateMeetup.isFavorite = !updateMeetup.isFavorite;
+    const meetupIndex = meetups.findIndex(m => m.id === id);
+    const updateMeetups = [...meetups];
+    updateMeetups[meetupIndex] = updateMeetup;
+    meetups = updateMeetups;
+  }
 </script>
 
 <style>
@@ -110,6 +120,6 @@
     <Button type="submit" caption="Save" />
   </form>
 
-  <MeetupGrid {meetups} />
+  <MeetupGrid {meetups} on:togglefavorite={toggleFavorite} />
 
 </main>
