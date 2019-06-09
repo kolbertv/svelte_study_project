@@ -25,7 +25,7 @@
       id={meetup.id}
       title={meetup.title}
       subtitle={meetup.subtitle}
-      description="{meetup.description}}"
+      description="{meetup.description}"
       imageUrl={meetup.imageUrl}
       email={meetup.contactEmail}
       address={meetup.address}
