@@ -1,9 +1,11 @@
 <script>
+  import meetups from "./meetups-store.js";
+
   import { createEventDispatcher } from "svelte";
   import TextInput from "../UI/TextInput.svelte";
   import Button from "../UI/Button.svelte";
   import Modal from "../UI/Modal.svelte";
-  import { isEmpty, isValidEmail } from '../helpers/validation';
+  import { isEmpty, isValidEmail } from "../helpers/validation";
 
   let title = "";
   let subtitle = "";
@@ -14,25 +16,33 @@
 
   const dispatch = createEventDispatcher();
 
-$: titleValid = !isEmpty(title);
-$: subtitleValid = !isEmpty(subtitle);
-$: addressValid = !isEmpty(address);
-$: emailValid = isValidEmail(email);
-$: descriptionValid = !isEmpty(description);
-$: imageUrlValid = !isEmpty(imageUrl);
-$: formIsValid = titleValid && subtitleValid && addressValid && emailValid && descriptionValid && imageUrlValid;
-
-
+  $: titleValid = !isEmpty(title);
+  $: subtitleValid = !isEmpty(subtitle);
+  $: addressValid = !isEmpty(address);
+  $: emailValid = isValidEmail(email);
+  $: descriptionValid = !isEmpty(description);
+  $: imageUrlValid = !isEmpty(imageUrl);
+  $: formIsValid =
+    titleValid &&
+    subtitleValid &&
+    addressValid &&
+    emailValid &&
+    descriptionValid &&
+    imageUrlValid;
 
   function submitForm() {
-    dispatch("save", {
+    const meetupData = {
       title: title,
       subtitle: subtitle,
-      address: address,
-      email: email,
       description: description,
+      contactEmail: email,
+      address: address,
       imageUrl: imageUrl
-    });
+    };
+
+    meetups.addMeetup(meetupData);
+
+    dispatch("save");
   }
 
   function cancel() {
@@ -94,7 +104,13 @@ $: formIsValid = titleValid && subtitleValid && addressValid && emailValid && de
   </form>
 
   <div slot="footer">
-    <Button type="button" mode="outline" on:click={submitForm} disabled={!formIsValid}>Save</Button>
+    <Button
+      type="button"
+      mode="outline"
+      on:click={submitForm}
+      disabled={!formIsValid}>
+      Save
+    </Button>
     <Button type="button" on:click={cancel}>Cancel</Button>
   </div>
 
