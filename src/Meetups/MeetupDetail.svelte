@@ -8,7 +8,7 @@
   let selectedMeetup;
 
   const unsubscribe = meetups.subscribe(items => {
-    selectedMeetup = item.find(i => i.id === id);
+    selectedMeetup = items.find(i => i.id === id);
   });
 
   const dispatch = createEventDispatcher();
@@ -16,6 +16,7 @@
   onDestroy(() => {
     unsubscribe();
   });
+
 </script>
 
 <style>
@@ -69,8 +70,6 @@
     <h2>{selectedMeetup.subtitle} - {selectedMeetup.adress}</h2>
     <p>{selectedMeetup.description}</p>
     <Button href="mailto:{selectedMeetup.contactEmail}">Contact</Button>
-    <Button type="button" mode="outline" on:click={() => dispatch('close')}>
-      Close
-    </Button>
+    <Button type="button" mode="outline" on:click={()=> dispatch('close')}>Close</Button>
   </div>
 </section>
