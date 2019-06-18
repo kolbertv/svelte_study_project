@@ -40,7 +40,7 @@ const customMeetupsStore = {
   },
   removeMeetup: id => {
     meetups.update(items => {
-      return items.filter(i => i.id != id);
+      return items.filter(i => i.id !== id);
     });
   },
   updateMeetup: (id, meetupData) => {
