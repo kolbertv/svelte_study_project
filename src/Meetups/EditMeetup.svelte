@@ -56,7 +56,7 @@
     };
 
     if (id) {
-      meetups.updateMeetup(id, meetupData)
+      meetups.updateMeetup(id, meetupData);
     } else {
       meetups.addMeetup(meetupData);
     }
@@ -66,6 +66,11 @@
 
   function cancel() {
     dispatch("cancel");
+  }
+
+  function deleteMeetup() {
+    meetups.removeMeetup(id);
+    dispatch("save");
   }
 </script>
 
@@ -123,6 +128,8 @@
   </form>
 
   <div slot="footer">
+
+    <Button type="button" on:click={cancel}>Cancel</Button>
     <Button
       type="button"
       mode="outline"
@@ -130,7 +137,8 @@
       disabled={!formIsValid}>
       Save
     </Button>
-    <Button type="button" on:click={cancel}>Cancel</Button>
+    {#if id}
+      <Button type="button" on:click={deleteMeetup}>Delete</Button>
+    {/if}
   </div>
-
 </Modal>
