@@ -33,7 +33,7 @@
         });
       }
       isLoading = false;
-      meetups.setMeetups(loadedMeetups);
+      meetups.setMeetups(loadedMeetups.reverse());
     })
     .catch(err => {
       isLoading = false;
