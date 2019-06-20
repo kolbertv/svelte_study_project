@@ -56,7 +56,20 @@
     };
 
     if (id) {
-      meetups.updateMeetup(id, meetupData);
+      fetch(`https://svelte-course-123.firebaseio.com/meetups/${id}.json`, {
+        method: "PATCH",
+        body: JSON.stringify(meetupData),
+        headers: { "Content-type": "application/json" }
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("Failed!");
+          }
+          meetups.updateMeetup(id, meetupData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } else {
       fetch("https://svelte-course-123.firebaseio.com/meetups.json", {
         method: "POST",
